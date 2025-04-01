@@ -12,7 +12,7 @@ export default function DebugSession() {
 
   return (
     <div>
-      <h1>User: {session.user?.name}</h1>
+      <h1>User: {session.user?.email}</h1>
       <p>Access Token: {session.accessToken}</p>
     </div>
   );

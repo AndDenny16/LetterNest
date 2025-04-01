@@ -8,6 +8,7 @@ const API_ENDPOINT = process.env.API_ENDPOINT;
 export async function POST(request: Request){
     try{
         const session = await getServerSession(options as NextAuthOptions);
+        console.log("email", session);
         if (!session || !session.accessToken){
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }

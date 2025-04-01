@@ -1,16 +1,17 @@
 import React from 'react'
 import type {Recommendation} from '../../types'
-import { getRecommendations } from '../lib/db';
+import { getSentRecommendations } from '../lib/serverdb';
 import RecommendationCard from '../components/RecommendationCard';
 import MainNavBar from '../components/MainNavBar';
 import DownMenu from '../components/DownMenu';
+import SentRecommendationCard from '../components/SentRecommendationCard';
 
 const Home = async() => {
 
-  const response = await getRecommendations();
+  const response = await getSentRecommendations();
   console.log(response);
 
-  const recommendations: Recommendation[] = response;
+  const recommendations: Recommendation[] = response as Recommendation[];;
 
 
   return (
@@ -26,7 +27,7 @@ const Home = async() => {
             <div className="w-full border min-w-[500px]">
               {recommendations.map((recommendation,idx) => (
                 <div key = {recommendation.recommendationId}  >
-                  <RecommendationCard  recommendation = {recommendation}/>
+                  <SentRecommendationCard  recommendation = {recommendation}/>
                 </div>
               ))}
             </div>

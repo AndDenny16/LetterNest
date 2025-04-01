@@ -1,22 +1,25 @@
 import React, {useMemo} from 'react'
 import type {Recommendation} from '../../types'
-import { getRecommendations } from '../lib/db';
+import { getMyRecommendations } from '../lib/serverdb';
 import RecommendationCard from '../components/RecommendationCard';
 import MainNavBar from '../components/MainNavBar';
 import DownMenu from '../components/DownMenu';
-import { signOut } from 'next-auth/react';
-import SignOutButton from '../components/SignOutButton';
-import NextAuth, { getServerSession } from "next-auth";
+import NextAuth, { getServerSession, NextAuthOptions } from "next-auth";
 import { options } from "../api/auth/[...nextauth]/options"
 
 
 const Home = async() => {
 
-  const response = await getRecommendations();
+  const session = await getServerSession(options as NextAuthOptions);
+  if (!session || !session?.user){
+    return "Session Expired"
+  }
 
-  const recommendations: Recommendation[] = response as Recommendation[];
+  const recommendations = await getMyRecommendations() as Recommendation[];
 
-  const session = await getServerSession(options);
+
+
+
 
   return (
     <div className="h-screen w-screen flex flex-col">

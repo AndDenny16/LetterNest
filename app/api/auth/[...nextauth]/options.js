@@ -1,6 +1,5 @@
 import CognitoProvider from "next-auth/providers/cognito";
 export const options = {
-    debug: true,
     secret: process.env.NEXTAUTH_SECRET,
     providers:[
         CognitoProvider({
@@ -22,8 +21,8 @@ export const options = {
     },
     callbacks: {
         async jwt({account, token}){
-            console.log("This is the account", account)
-            console.log("this is token", token)
+            // console.log("This is the account", account)
+            // console.log("this is token", token)
             if (account) {
                 token.accessToken = account.access_token;
                 token.refreshToken = account.refresh_token;

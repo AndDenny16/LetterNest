@@ -12,8 +12,7 @@ export async function GET(req:Request){
         if (!session || !session.accessToken){
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }
-        const email = session.user?.email
-        const response = await fetch(`${API_ENDPOINT}/Recommendations/my-recommendations/${email}`,{
+        const response = await fetch(`${API_ENDPOINT}/Emails`,{
             method:"GET",
             headers: {
                 'Authorization': `Bearer ${session.accessToken}`
@@ -21,7 +20,7 @@ export async function GET(req:Request){
         })
         const resJson = await response.json()
         console.log("This is the response", resJson)
-        return NextResponse.json({"sucess": true, recommendations: resJson.recommendations});
+        return NextResponse.json({"sucess": true, "emails": resJson.recommendations});
 
     }catch(error: any){
 

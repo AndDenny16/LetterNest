@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession, NextAuthOptions } from "next-auth";
-import { options } from "../auth/[...nextauth]/options";
+import { options } from "../../auth/[...nextauth]/options";
 
 const API_ENDPOINT = process.env.API_ENDPOINT
 

@@ -11,6 +11,7 @@ declare module "next-auth" {
         accessToken?: string;
         refreshToken?: string;
         expiresIn?: number;
+        email?: string
     }
 
     interface JWT extends DefaultJWT {

@@ -1,44 +1,51 @@
 "use client"
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react'
-import { useFetchPresigned } from '../Hooks/useFetchPresigned';
 import { useFileUpload } from '../Hooks/useFileUpload';
 
 const UploadForm = () => {
     const [studentEmail, setStudentEmail] = useState<string>("");
     const[uploadedFile, setUploadedFile] = useState<File| null>();
-    const[localError, setLocalError] = useState<string| null>(null);
+    const[reason, setReason] = useState<string>("");
+
+    const[localMessage, setLocalMessage] = useState<string| null>(null);
     const {loading, error, uploadRecommendation} = useFileUpload();
     const {data: session} = useSession();
     const sender = session?.user?.email || ""
 
 
     const uploadData = async() => {
-      setLocalError(null);
+      setLocalMessage(null);
       if (!studentEmail){
-        setLocalError("Please Enter an Email")
+        setLocalMessage("Please Enter an Email")
         return
       }
       if (!uploadedFile){
-        setLocalError("Please Enter a File")
+        setLocalMessage("Please Enter a File")
         return
       }
       if (!sender){
-        setLocalError("Session Expired")
+        setLocalMessage("Session Expired")
         return
       }
       const uploadProps = {
-        sender: sender,
-        receiver: studentEmail,
-        fileType: uploadedFile.type,
-        reason: "Bc hes swag"
+        postSenderEmail: sender,
+        postReceiverEmail: studentEmail,
+        postFileType: uploadedFile.type,
+        postReason: reason
       }
 
       const response = await uploadRecommendation(uploadProps, uploadedFile)
-
+      if (response.success){
+        setLocalMessage("Upload Success")
+        setUploadedFile(null);
+        setReason("")
+        setStudentEmail("")
+      }
 
     }
    
+  console.log(studentEmail)
 
   return (
     <div>
@@ -52,13 +59,20 @@ const UploadForm = () => {
               placeholder="Student's Email"
               onChange ={(e) => setStudentEmail(e.target.value)}
               required
+              value={studentEmail}
               />
-              <input type="text" className="input input-bordered input-success w-full max-w-xs my-4"  placeholder="Reason"/>
+              <input type="text" 
+              className="input input-bordered input-success w-full max-w-xs my-4"  
+              placeholder="Reason"
+              onChange = {(e) => setReason(e.target.value)}
+              value={reason}
+              
+              />
             </div>
           <button  onClick={() => {uploadData()}}className='btn bg-green-800 text-white'> Upload ! </button>
-          {localError && <h2>{localError}</h2>}
           {loading && <h2>Loading .... </h2>}
           {error && <h2>{error}</h2>}
+          {localMessage && <h2>{localMessage}</h2>}
 
     </div>
   )

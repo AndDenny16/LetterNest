@@ -1,13 +1,14 @@
 export type Recommendation = {
     recommendationId: number,
-    recommendationWriterId: number,
-    recommendationWriterString: string,
-    recomenmendationStudentString: string,
-    recommendationStudentId: number,
-    recommendationUploadDate: Date
+    sender_id: string,
+    receiver_id: string,
+    sender_sk: string, 
+    recommendationSubmitTime: string,
+    recommendationReason: string,
+    recommendationFileType: string
+    recommendationS3Key?: string
     
 };
-
 
 export interface MenuItem {
     id: number;
@@ -17,23 +18,23 @@ export interface MenuItem {
   
 
 export type postOptionsType = {
-    sender: string,
-    receiver: string,
-    fileType: string,
-    reason: string
+    postSenderEmail: string,
+    postReceiverEmail: string,
+    postFileType: string,
+    postReason: string
 }
 
 
-export type uploadResultType = {
+export type generalReturnType = {
     success: boolean;
     error?: string
   };
 
-export type metadata = {
-    sender: string,
-    receiver: string,
-    fileType: string,
-    reason:string,
-    s3Key: string
+export type dynamoMetadata = {
+    metadataSenderEmail: string,
+    metadataReceiverEmail: string,
+    metadataFileType: string,
+    metadataReason:string,
+    metadataS3Key: string
 
 }

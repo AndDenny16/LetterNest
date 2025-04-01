@@ -8,7 +8,7 @@ import LogoImage from '@/public/logo3.png'
 const MainNavBar = () => {
 
   return (
-  <div className="flex items-center bg-green-800 text-white justify-between flex p-0 min-h-20">
+  <div className="flex items-center bg-green-800 text-white justify-between flex p-0 min-h-20 border-b-green-900 border-b-2">
       <Link className="btn btn-ghost text-4xl font-serif" href='/Home'>
       <Image src={LogoImage} className= "h-12 w-12 mb-2" alt= "logo"/>
       Letter Nest

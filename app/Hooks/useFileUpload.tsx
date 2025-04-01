@@ -1,14 +1,14 @@
 
 import React, {useState} from 'react';
 import { fetchPresignedLink } from '../lib/s3';
-import type { postOptionsType, uploadResultType } from '@/types';
-import { putDynamoMetaData } from '../lib/db';
+import type { postOptionsType, generalReturnType } from '@/types';
+import { putDynamoMetaData } from '../lib/clientdb';
 
 
 type fileUploadReturn = {
     loading: boolean,
     error: string | null,
-    uploadRecommendation: (fileUploadProps: postOptionsType, file: File) => Promise<uploadResultType>;
+    uploadRecommendation: (fileUploadProps: postOptionsType, file: File) => Promise<generalReturnType>;
 }
 
 
@@ -17,7 +17,7 @@ export function useFileUpload(): fileUploadReturn {
     const [loading, setLoading ] = useState<boolean>(false);
     const [ error, setError ] = useState<string | null>("");
 
-    const uploadRecommendation = async(postOptions:postOptionsType, file:File ): Promise<uploadResultType>=> {
+    const uploadRecommendation = async(postOptions:postOptionsType, file:File ): Promise<generalReturnType>=> {
         //Set State
         setLoading(true);
         setError(null);
@@ -47,13 +47,16 @@ export function useFileUpload(): fileUploadReturn {
                 throw new Error(errorText || "Upload Failed");
             }
 
-            const metadata = {
-                ...postOptions,
-                s3Key: s3Key,
+            const dynamoMetadata = {
+                metadataSenderEmail: postOptions.postSenderEmail,
+                metadataReceiverEmail: postOptions.postReceiverEmail,
+                metadataFileType: postOptions.postFileType,
+                metadataReason:postOptions.postReason,
+                metadataS3Key: s3Key
             }
 
             // Add Metadata to Dynamo DB
-            const response = await putDynamoMetaData(metadata)
+            const response = await putDynamoMetaData(dynamoMetadata)
             if (!response.success){
                 console.log(response.error)
                 throw new Error(response.error);

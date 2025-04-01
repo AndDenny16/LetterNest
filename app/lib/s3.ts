@@ -1,9 +1,4 @@
-
-type postOptions = {
-    sender: string,
-    receiver: string,
-    fileType:string
-}
+import { postOptionsType } from "@/types";
 
 type presignedResponse = {
     success: boolean,
@@ -12,7 +7,7 @@ type presignedResponse = {
     objectKey?:string
 }
 
-export async function fetchPresignedLink(postOptions:postOptions):Promise<presignedResponse>{
+export async function fetchPresignedLink(postOptions:postOptionsType):Promise<presignedResponse>{
 
     try{
         const response = await fetch(`/api/recommendations/presignedurl`, {

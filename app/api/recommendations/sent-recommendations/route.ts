@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession, NextAuthOptions } from "next-auth";
-import { options } from "../auth/[...nextauth]/options";
-
+import { options } from "../../auth/[...nextauth]/options";
 const API_ENDPOINT = process.env.API_ENDPOINT
 
 
@@ -13,7 +12,7 @@ export async function GET(req:Request){
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }
         const email = session.user?.email
-        const response = await fetch(`${API_ENDPOINT}/Recommendations/my-recommendations/${email}`,{
+        const response = await fetch(`${API_ENDPOINT}/Recommendations/sent-recommendations/${email}`,{
             method:"GET",
             headers: {
                 'Authorization': `Bearer ${session.accessToken}`
