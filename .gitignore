@@ -43,3 +43,5 @@ next-env.d.ts
 /app/lib/auth.ts
 /app/api/auth/verification
 /app/api/auth/SignUp
+
+/.vscode/
