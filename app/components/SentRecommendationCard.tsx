@@ -1,5 +1,7 @@
 import React from 'react'
 import type { Recommendation } from '../../types'
+import Link from 'next/link';
+import { Pencil } from 'lucide-react';
 
 
 interface RecommendationProps {
@@ -25,11 +27,21 @@ const SentRecommendationCard: React.FC<RecommendationProps>  = ({recommendation}
 
   
   return (
-  <div className="bg-base-100 w-10/12 shadow-xl border-2 border-green-800 p-4 flex flex-shrink-0 my-2 rounded-md justify-between hover:bg-slate-100 ">
-    <h2 className="card-title font-serif">{cleanText(recommendation.receiver_id)} {formatTime(recommendation.recommendationSubmitTime)}</h2>
+  <div className="bg-base-100 w-10/12 shadow-xl border-2 border-green-800 p-4 flex flex-shrink-0 my-2 rounded-md  hover:bg-slate-100 ">
+    <div className='flex flex-col'>
+        <h2 className="card-title font-serif">{cleanText(recommendation.receiver_id)}</h2>
+        <h3 className='font-serif'>{recommendation.recommendationReason} </h3>
+    </div>
+    <div className='flex-col flex ml-20 flex-shrink-0'>
+        <h3 className='font-serif'> Submitted: {formatTime(recommendation.recommendationSubmitTime)}</h3>
+        <h3 className='font-serif'> Last Sent : 4/20/2024</h3>
+    </div>
 
-    <div className='flex-col flex mr-40 flex-shrink-0'>
-      <h3 className='font-serif'> Last Sent : 4/20/2024</h3>
+    <div className='flex-col flex ml-20 flex-shrink-0 border-2'>
+        <Link className="btn btn-ghost text-s  text-green-800" href='/Request'><Pencil size={10}/> Edit</Link>
+    </div>
+    <div className='flex-col flex ml-20 flex-shrink-0 border-2'>
+        <Link className="btn btn-ghost text-s  text-green-800" href='/Request'><Pencil size={10}/> Edit</Link>
     </div>
   </div>
   )

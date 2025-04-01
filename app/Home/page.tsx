@@ -33,11 +33,15 @@ const Home = async() => {
             Your Recieved Recommendations
           </h1>
           <div className="w-full border border-red-900 min-w-[500px]">
-            {recommendations.map((recommendation) => (
+            {recommendations.length > 0 ? recommendations.map((recommendation) => (
               <div key={recommendation.recommendationId}>
                 <RecommendationCard recommendation={recommendation} />
               </div>
-            ))}
+            ))
+            : <h2>No Recommendations To Display!</h2>
+          
+          
+          }
           </div>
         </div>
       </div>

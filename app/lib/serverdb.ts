@@ -17,7 +17,7 @@ export async function getMyRecommendations(): Promise<Recommendation[] | null> {
         return recommendations
     }catch(error: any){
         console.log(error.message)
-        return null
+        return []
     }
 }
 
@@ -32,6 +32,8 @@ export async function getSentRecommendations(): Promise<Recommendation[]> {
         })
 
         const resJson = await response.json();
+        console.log(resJson.success)
+        console.log(resJson.recommendations)
         if(!resJson.success || !resJson.recommendations){
             throw new Error("Sent Recommendations Not Returned")
         }

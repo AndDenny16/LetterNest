@@ -20,7 +20,7 @@ export async function GET(req:Request){
         })
         const resJson = await response.json()
         console.log("This is the response", resJson)
-        return NextResponse.json({"sucess": true, recommendations: resJson.recommendations});
+        return NextResponse.json({"success": true, recommendations: resJson.recommendations});
 
     }catch(error: any){
 
